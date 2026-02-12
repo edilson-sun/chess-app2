@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>♔ Chess App - Ajedrez Online ♚</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Pantalla de Login/Registro -->
+  <div id="auth-screen" class="auth-screen">
+    <div class="auth-container">
+      <h1>♔ Chess App ♚</h1>
+      
+      <div id="login-form" class="auth-form">
+        <h2>Iniciar Sesión</h2>
+        <input type="text" id="login-username" placeholder="Usuario o Email" />
+        <input type="password" id="login-password" placeholder="Contraseña" />
+        <button id="login-btn">Iniciar Sesión</button>
+        <p>¿No tienes cuenta? <a href="#" id="show-register">Regístrate aquí</a></p>
+      </div>
+
+      <div id="register-form" class="auth-form" style="display: none;">
+        <h2>Registro</h2>
+        <input type="text" id="register-username" placeholder="Usuario" />
+        <input type="email" id="register-email" placeholder="Email" />
+        <input type="password" id="register-password" placeholder="Contraseña (min. 6 caracteres)" />
+        <button id="register-btn">Registrarse</button>
+        <p>¿Ya tienes cuenta? <a href="#" id="show-login">Inicia sesión aquí</a></p>
+      </div>
+
+      <div id="auth-message" class="message"></div>
+    </div>
+  </div>
+
+  <!-- Pantalla de Selección de Modo -->
+  <div id="mode-screen" style="display: none;">
+    <div class="mode-container">
+      <h1>♔ Selecciona Modo de Juego ♚</h1>
+      
+      <div class="mode-options">
+        <div class="mode-card" id="mode-vs-ai">
+          <div class="mode-icon">🤖</div>
+          <h2>VS Computadora</h2>
+          <p>Juega contra un bot de IA inteligente</p>
+          <button class="mode-btn">Jugar</button>
+        </div>
+
+        <div class="mode-card" id="mode-vs-player">
+          <div class="mode-icon">👥</div>
+          <h2>VS Jugador</h2>
+          <p>Juega contra otro jugador local</p>
+          <button class="mode-btn">Jugar</button>
+        </div>
+      </div>
+
+      <button id="back-to-menu" class="btn-secondary">🔙 Cerrar Sesión</button>
+    </div>
+  </div>
+
+  <!-- Pantalla de Juego -->
+  <div id="game-screen" style="display: none;">
+    <div class="game-container">
+      <div class="game-header">
+        <div class="header-left">
+          <h1>♔ Ajedrez ♚</h1>
+          <div class="game-mode-indicator" id="game-mode-text">VS IA</div>
+        </div>
+        <div class="header-right">
+          <span id="username-display" class="username">👤 Usuario</span>
+          <button id="back-btn" class="btn-small">🔙 Volver</button>
+        </div>
+      </div>
+
+      <div class="game-content">
+        <!-- Panel Izquierdo: Información -->
+        <div class="side-panel left-panel">
+          <div class="info-card">
+            <h3>⚫ Jugador Negro</h3>
+            <div class="player-name" id="black-player">Computadora</div>
+          </div>
+
+          <div class="captured-pieces" id="captured-white">
+            <h4>Piezas Capturadas</h4>
+            <div class="pieces-container"></div>
+          </div>
+
+          <div class="info-card turn-indicator" id="turn-info">
+            <div class="turn-icon">⚪</div>
+            <div>Turno: <strong>Blancas</strong></div>
+          </div>
+        </div>
+
+        <!-- Centro: Tablero -->
+        <div class="board-container">
+          <div class="board" id="board"></div>
+        </div>
+
+        <!-- Panel Derecho: Controles -->
+        <div class="side-panel right-panel">
+          <div class="info-card">
+            <h3>⚪ Jugador Blanco</h3>
+            <div class="player-name" id="white-player">Tú</div>
+          </div>
+
+          <div class="captured-pieces" id="captured-black">
+            <h4>Piezas Capturadas</h4>
+            <div class="pieces-container"></div>
+          </div>
+
+          <div class="controls-panel">
+            <button id="reset-btn" class="ctrl-btn">🔄 Nueva Partida</button>
+            <button id="show-history-btn" class="ctrl-btn">📜 Historial</button>
+            <button id="show-stats-btn" class="ctrl-btn">📊 Estadísticas</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Historial -->
+    <div class="modal" id="history-modal" style="display: none;">
+      <div class="modal-content">
+        <span class="close" id="close-history">&times;</span>
+        <h2>📜 Historial de Partidas</h2>
+        <div id="history-list"></div>
+      </div>
+    </div>
+
+    <!-- Modal de Estadísticas -->
+    <div class="modal" id="stats-modal" style="display: none;">
+      <div class="modal-content">
+        <span class="close" id="close-stats">&times;</span>
+        <h2>📊 Estadísticas del Jugador</h2>
+        <div id="stats-content"></div>
+      </div>
+    </div>
+
+    <!-- Modal de Promoción de Peón -->
+    <div class="modal" id="promotion-modal" style="display: none;">
+      <div class="modal-content promotion-modal">
+        <h2>♟️ Promoción de Peón</h2>
+        <p>Selecciona la pieza:</p>
+        <div class="promotion-pieces" id="promotion-pieces"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
