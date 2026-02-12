@@ -62,7 +62,6 @@ app.use(cors({
   optionsSuccessStatus: 200
 }));
 app.use(express.json({ limit: '10kb' }));
-app.use(express.static(path.join(__dirname)));
 
 // Rate limiting simple
 const requestCounts = new Map();
@@ -440,7 +439,15 @@ app.get('/api/stats', authenticateToken, async (req, res) => {
 // ==================== RUTAS PRINCIPALES ====================
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.json({ 
+    message: 'Chess App Backend API',
+    version: '1.0.0',
+    endpoints: {
+      auth: ['/api/register', '/api/login', '/api/verify'],
+      games: ['/api/games', '/api/stats'],
+      health: '/health'
+    }
+  });
 });
 
 app.get('/health', (req, res) => {
