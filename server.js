@@ -28,20 +28,39 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 
 // ==================== MIDDLEWARE ====================
 
-// CORS - CONFIGURACIÓN SIMPLE Y DIRECTA
+// CORS MANUAL - Configuración agresiva para garantizar funcionamiento
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  const allowedOrigins = NODE_ENV === 'production' 
+    ? ['https://chess-app22.netlify.app']
+    : ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173'];
+  
+  if (allowedOrigins.includes(origin) || !origin) {
+    res.header('Access-Control-Allow-Origin', origin || '*');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  }
+  
+  // Manejar preflight
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
+
+// CORS adicional con el paquete
 app.use(cors({
   origin: NODE_ENV === 'production' 
     ? 'https://chess-app22.netlify.app'
     : ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept'],
   exposedHeaders: ['Content-Length'],
   optionsSuccessStatus: 200
 }));
-
-// Manejo explícito de preflight
-app.options('*', cors());
 app.use(express.json({ limit: '10kb' }));
 app.use(express.static(path.join(__dirname)));
 
